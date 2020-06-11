@@ -14,6 +14,8 @@
 
 #include <linux/can/isotp.h>
 
+#include <stdlib.h>
+
 #define FULL_PAYLOAD 9
 
 void consume_arguments(int argc, char *argv[]);
@@ -122,6 +124,18 @@ void set_up()
         ret = bind(socket_descriptor, (struct sockaddr *)&can_addr, sizeof(can_addr));
         is_socket_available = ret >= 0;
         std::cout << ret << "\n";
+
+        //Struct to hold the configurations to the socket.
+        static struct can_isotp_fc_options m_fcopts; 
+        m_fcopts.bs = 0x3;
+        m_fcopts.stmin = 0x7F;
+        m_fcopts.wftmax = 0;
+
+        //calls the function to pass the options
+        int res;
+        res = setsockopt(socket_descriptor, SOL_CAN_ISOTP, CAN_ISOTP_RECV_FC, &m_fcopts, sizeof(m_fcopts));
+        std::cout << "The result is: " << res << "\n";
+
     }
 
     std::cout << "  Availability     : " << is_socket_available << "\n\n";
