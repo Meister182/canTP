@@ -143,4 +143,7 @@ void server()
 {
     std::cout << "Starting can TP Server.\n";
 
+    // ret = recvfrom
+    // print ret
+    // print da mensagem
 }
