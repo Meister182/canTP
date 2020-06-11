@@ -12,6 +12,8 @@
 #include <netinet/in.h>
 #include <linux/can/raw.h>
 
+#define FULL_PAYLOAD 9
+
 void consume_arguments(int argc, char *argv[]);
 void set_up();
 void client();
@@ -142,8 +144,26 @@ void client()
 void server()
 {
     std::cout << "Starting can TP Server.\n";
+    struct can_frame frame;
+    int socket_length = sizeof(can_addr);
+
 
     // ret = recvfrom
+    ret = recvfrom(socket_descriptor, &frame, sizeof(frame), 0, (sockaddr*)&can_addr, (socklen_t*)&socket_length);
+    
+    std::cout << "Received Can Data id: " + std::to_string(frame.can_id);
+    std::vector<uint8_t> data(FULL_PAYLOAD);
+                    
+    auto it = data.begin();
+    *it = frame.can_id;
+    ++it;
+    std::copy(std::begin(frame.data), std::end(frame.data), it);
+
+    
     // print ret
+    std::cout << ret;
+    
+
     // print da mensagem
+    std::cout << "receive: " + std::to_string(frame.can_id);
 }
