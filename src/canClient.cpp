@@ -151,7 +151,7 @@ void server()
     // ret = recvfrom
     ret = recvfrom(socket_descriptor, &frame, sizeof(frame), 0, (sockaddr*)&can_addr, (socklen_t*)&socket_length);
     
-    std::cout << "Received Can Data id: " + std::to_string(frame.can_id);
+    std::cout << "Received Can Data id: " + std::to_string(frame.can_id) << "\n" << std::endl;
     std::vector<uint8_t> data(FULL_PAYLOAD);
                     
     auto it = data.begin();
@@ -161,9 +161,9 @@ void server()
 
     
     // print ret
-    std::cout << ret;
+    std::cout << ret << "\n" << std::endl;
     
 
     // print da mensagem
-    std::cout << "receive: " + std::to_string(frame.can_id);
+    std::cout << "receive: " + std::to_string(frame.can_id) << "\n" << std::endl;
 }
