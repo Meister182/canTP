@@ -12,6 +12,8 @@
 #include <netinet/in.h>
 #include <linux/can/raw.h>
 
+#include <linux/can/isotp.h>
+
 #define FULL_PAYLOAD 9
 
 void consume_arguments(int argc, char *argv[]);
